@@ -1,4 +1,8 @@
 class Libro:
+    """
+    Clase que representa un libro dentro de la biblioteca.
+    Contiene información sobre el título, autor, ISBN y si está disponible.
+    """
     def __init__(self, titulo, autor, isbn):
         self.titulo = titulo
         self.autor = autor
@@ -6,6 +10,9 @@ class Libro:
         self.disponible = True
 
     def prestar(self):
+        """
+        Método para prestar un libro. Cambia el estado a 'No disponible'.
+        """
         if self.disponible:
             self.disponible = False
             return f"Libro '{self.titulo}' prestado con éxito."
@@ -13,6 +20,9 @@ class Libro:
             return f"El libro '{self.titulo}' ya está prestado."
 
     def devolver(self):
+        """
+        Método para devolver un libro prestado. Cambia el estado a 'Disponible'.
+        """
         if not self.disponible:
             self.disponible = True
             return f"Libro '{self.titulo}' devuelto con éxito."
@@ -20,10 +30,18 @@ class Libro:
             return f"El libro '{self.titulo}' ya estaba disponible."
     
     def mostrar_info(self):
+        """
+        Método para mostrar la información del libro.
+        Indica si el libro está disponible o no.
+        """
         estado = "Sí" if self.disponible else "No"
-        return f"{self.titulo} ({self.autor}) - ISBN: {self.isbn} - Disponible: {estado}"
+        return f"- {self.titulo} ({self.autor}) - ISBN: {self.isbn} - Disponible: {estado}"
 
 class Biblioteca:
+    """
+    Clase que representa la biblioteca.
+    Gestiona una lista de libros y las operaciones sobre ellos.
+    """
     def __init__(self):
         self.libros = []
 
@@ -55,37 +73,38 @@ class Biblioteca:
                 return libro
         return None
 
-def ejecutar_comandos(comandos):
+def ejecutar_interactivo():
+    """
+    Función que permite al usuario interactuar con la biblioteca sin usar input(),
+    útil en entornos donde la entrada de usuario está restringida.
+    """
     biblioteca = Biblioteca()
-    resultados = []
+    opciones = [
+        ("agregar", "El Quijote", "Cervantes", "12345"),
+        ("mostrar",),
+        ("prestar", "12345"),
+        ("mostrar",),
+        ("devolver", "12345"),
+        ("mostrar",),
+        ("salir",)
+    ]
     
-    for comando in comandos:
-        if comando[0] == "agregar":
-            resultados.append(biblioteca.agregar(*comando[1:]))
-        elif comando[0] == "prestar":
-            resultados.append(biblioteca.prestar(comando[1]))
-        elif comando[0] == "devolver":
-            resultados.append(biblioteca.devolver(comando[1]))
-        elif comando[0] == "mostrar":
-            resultados.append(biblioteca.mostrar())
-        elif comando[0] == "buscar":
-            resultados.append(biblioteca.buscar(comando[1]))
-        elif comando[0] == "salir":
-            resultados.append("Saliendo del sistema...")
+    print("Bienvenido al Sistema de Gestión de Biblioteca")
+    
+    for opcion in opciones:
+        if opcion[0] == "agregar":
+            print(biblioteca.agregar(*opcion[1:]))
+        elif opcion[0] == "prestar":
+            print(biblioteca.prestar(opcion[1]))
+        elif opcion[0] == "devolver":
+            print(biblioteca.devolver(opcion[1]))
+        elif opcion[0] == "mostrar":
+            print(biblioteca.mostrar())
+        elif opcion[0] == "buscar":
+            print(biblioteca.buscar(opcion[1]))
+        elif opcion[0] == "salir":
+            print("Saliendo del sistema...")
             break
-    
-    return "\n".join(resultados)
 
-# Ejemplo de uso con comandos predefinidos
-ejemplo_comandos = [
-    ("agregar", "El Quijote", "Miguel de Cervantes", "12345"),
-    ("mostrar",),
-    ("prestar", "12345"),
-    ("mostrar",),
-    ("devolver", "12345"),
-    ("mostrar",),
-    ("salir",)
-]
-
-resultado = ejecutar_comandos(ejemplo_comandos)
-print(resultado)
+# Ejecutar la versión sin input()
+ejecutar_interactivo()
