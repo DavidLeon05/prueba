@@ -73,38 +73,33 @@ class Biblioteca:
                 return libro
         return None
 
-def ejecutar_interactivo():
+def ejecutar_sin_interaccion():
     """
-    Función que permite al usuario interactuar con la biblioteca sin usar input(),
-    útil en entornos donde la entrada de usuario está restringida.
+    Función para ejecutar pruebas sin necesidad de input(), evitando errores de I/O.
     """
     biblioteca = Biblioteca()
-    opciones = [
-        ("agregar", "El Quijote", "Cervantes", "12345"),
-        ("mostrar",),
-        ("prestar", "12345"),
-        ("mostrar",),
-        ("devolver", "12345"),
-        ("mostrar",),
-        ("salir",)
-    ]
-    
     print("Bienvenido al Sistema de Gestión de Biblioteca")
     
-    for opcion in opciones:
-        if opcion[0] == "agregar":
-            print(biblioteca.agregar(*opcion[1:]))
-        elif opcion[0] == "prestar":
-            print(biblioteca.prestar(opcion[1]))
-        elif opcion[0] == "devolver":
-            print(biblioteca.devolver(opcion[1]))
-        elif opcion[0] == "mostrar":
-            print(biblioteca.mostrar())
-        elif opcion[0] == "buscar":
-            print(biblioteca.buscar(opcion[1]))
-        elif opcion[0] == "salir":
-            print("Saliendo del sistema...")
-            break
+    acciones = [
+        biblioteca.agregar("El Quijote", "Cervantes", "12345"),
+        biblioteca.mostrar(),
+        biblioteca.prestar("12345"),
+        biblioteca.mostrar(),
+        biblioteca.devolver("12345"),
+        biblioteca.mostrar()
+    ]
+    
+    print("\n1. Agregar libro")
+    print("2. Prestar libro")
+    print("3. Devolver libro")
+    print("4. Mostrar libros")
+    print("5. Buscar libro")
+    print("6. Salir")
+    
+    for resultado in acciones:
+        print(resultado)
+    
+    print("Saliendo del sistema...")
 
-# Ejecutar la versión sin input()
-ejecutar_interactivo()
+# Ejecutar pruebas sin interacción
+ejecutar_sin_interaccion()
